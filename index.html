@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./css/normalize.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
     <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/weather-summary.css" />
+    <link rel="stylesheet" href="./css/weather-details.css" />
 
     <title>Weather App</title>
   </head>
@@ -23,11 +25,21 @@
       </div>
       <div id="city-main-info">
         <div id="today-weather-icon"></div>
-        <p id="today-temperature">12°C</p>
+        <p id="today-temperature">12<span class="sup">°C</span></p>
         <p id="today-day">Monday, <span id="today-hour">16:00</span></p>
-        <ul id="today-weather">
-          <li>Mostly Cloudly</li>
-          <li>Rain - 30%</li>
+        <ul id="today-weather-list">
+          <li>
+            <div class="today-weather-item">
+              <span></span>
+              <p>Mostly Cloudly</p>
+            </div>
+          </li>
+          <li>
+            <div class="today-weather-item">
+              <span></span>
+              <p>Rain - 30%</p>
+            </div>
+          </li>
         </ul>
         <div id="city">
           <h1>New York, NY, USA</h1>

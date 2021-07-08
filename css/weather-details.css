@@ -1,0 +1,21 @@
+#weather-details {
+  background-color: var(--light-grey);
+}
+
+nav {
+  display: flex;
+}
+#week-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+#week-list li {
+  width: 14%;
+}
+#highlights-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+#highlights-list li {
+  width: 30%;
+}
