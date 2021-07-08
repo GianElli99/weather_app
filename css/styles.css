@@ -1,0 +1,48 @@
+:root {
+  --light-grey: #f6f6f8;
+  --dark-grey: #bcbcbc;
+  --light-yellow: #ffe15c;
+  --dark-yellow: #ffbf5e;
+  --blue: #4050d2;
+}
+
+body {
+  display: flex;
+
+  min-height: 100vh;
+
+  font-family: 'Roboto', sans-serif;
+}
+#weather-summary {
+  width: 30%;
+}
+#weather-details {
+  width: 70%;
+
+  background-color: var(--light-grey);
+}
+#search-icon {
+  height: 22px;
+  width: 22px;
+  display: inline-block;
+
+  background-image: url(../images/search-symbol.png);
+  background-size: contain;
+}
+nav {
+  display: flex;
+}
+#week-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+#week-list li {
+  width: 14%;
+}
+#highlights-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+#highlights-list li {
+  width: 30%;
+}

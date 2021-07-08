@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+
+    <title>Weather App</title>
+  </head>
+  <body>
+    <div id="weather-summary">
+      <div id="city-search-bar">
+        <span id="search-icon"></span>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Seach for places..."
+        />
+      </div>
+      <div id="city-main-info">
+        <div id="today-weather-icon"></div>
+        <p id="today-temperature">12°C</p>
+        <p id="today-day">Monday, <span id="today-hour">16:00</span></p>
+        <ul id="today-weather">
+          <li>Mostly Cloudly</li>
+          <li>Rain - 30%</li>
+        </ul>
+        <div id="city">
+          <h1>New York, NY, USA</h1>
+        </div>
+      </div>
+    </div>
+    <div id="weather-details">
+      <nav>
+        <ul id="kind-of-detail">
+          <li>Today</li>
+          <li>Week</li>
+        </ul>
+        <ul id="temperature-scale">
+          <li>°F</li>
+          <li>°C</li>
+        </ul>
+        <div id="profile"></div>
+      </nav>
+      <ul id="week-list">
+        <li>
+          <div id="day-1" class="day-wrapper">
+            <p class="day-name">Sun</p>
+            <div class="day-weather-icon"></div>
+            <p>
+              <span class="day-max-temp">15°</span>
+              <span class="day-min-temp">-3°</span>
+            </p>
+          </div>
+        </li>
+        <li>
+          <div id="day-2" class="day-wrapper">
+            <p class="day-name">Mon</p>
+            <div class="day-weather-icon"></div>
+            <p>
+              <span class="day-max-temp">15°</span>
+              <span class="day-min-temp">-3°</span>
+            </p>
+          </div>
+        </li>
+        <li>
+          <div id="day-3" class="day-wrapper">
+            <p class="day-name">Tue</p>
+            <div class="day-weather-icon"></div>
+            <p>
+              <span class="day-max-temp">15°</span>
+              <span class="day-min-temp">-3°</span>
+            </p>
+          </div>
+        </li>
+        <li>
+          <div id="day-4" class="day-wrapper">
+            <p class="day-name">Wed</p>
+            <div class="day-weather-icon"></div>
+            <p>
+              <span class="day-max-temp">15°</span>
+              <span class="day-min-temp">-3°</span>
+            </p>
+          </div>
+        </li>
+        <li>
+          <div id="day-5" class="day-wrapper">
+            <p class="day-name">Thu</p>
+            <div class="day-weather-icon"></div>
+            <p>
+              <span class="day-max-temp">15°</span>
+              <span class="day-min-temp">-3°</span>
+            </p>
+          </div>
+        </li>
+        <li>
+          <div id="day-6" class="day-wrapper">
+            <p class="day-name">Fri</p>
+            <div class="day-weather-icon"></div>
+            <p>
+              <span class="day-max-temp">15°</span>
+              <span class="day-min-temp">-3°</span>
+            </p>
+          </div>
+        </li>
+        <li>
+          <div id="day-7" class="day-wrapper">
+            <p class="day-name">Sat</p>
+            <div class="day-weather-icon"></div>
+            <p>
+              <span class="day-max-temp">15°</span>
+              <span class="day-min-temp">-3°</span>
+            </p>
+          </div>
+        </li>
+      </ul>
+      <div id="today-details">
+        <h2>Today's Highlights</h2>
+        <ul id="highlights-list">
+          <li>
+            <div id="uv-index-wrapper" class="highlight-wrapper">
+              <h3>UV Index</h3>
+            </div>
+          </li>
+          <li>
+            <div id="wind-status-wrapper" class="highlight-wrapper">
+              <h3>Wind Status</h3>
+            </div>
+          </li>
+          <li>
+            <div id="sunrise-sunset-wrapper" class="highlight-wrapper">
+              <h3>Sunrise & Sunset</h3>
+            </div>
+          </li>
+          <li>
+            <div id="humidity-wrapper" class="highlight-wrapper">
+              <h3>Humidity</h3>
+            </div>
+          </li>
+          <li>
+            <div id="visibility-wrapper" class="highlight-wrapper">
+              <h3>Visibility</h3>
+            </div>
+          </li>
+          <li>
+            <div id="air-quality-wrapper" class="highlight-wrapper">
+              <h3>Air Quality</h3>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
