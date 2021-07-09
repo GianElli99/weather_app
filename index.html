@@ -171,14 +171,21 @@
         <ul id="highlights-list">
           <li id="uv-index" class="highlight-wrapper">
             <h3>UV Index</h3>
-            <div id="uv-image"></div>
-            <p id="uv-value">5</p>
+            <div id="uv-image-wrapper">
+              <img
+                id="uv-image"
+                src="./weather-icons/fill/all/uv-index-6.svg"
+                alt="uv-image"
+              />
+            </div>
           </li>
           <li id="wind-status" class="highlight-wrapper">
             <h3>Wind Status</h3>
-            <p id="wind-value"><span id="wind-value-number">7.7</span> km/h</p>
+            <p id="wind-value"><span id="wind-value-number">7.7</span id="wind-value-unit"> km/h</p>
             <div id="win-direction-wrapper">
-              <div id="wind-icon"></div>
+              <div id="wind-icon">
+                <img src="./weather-icons/fill/all/compass.svg" alt="compass">
+              </div>
               <p id="wind-direction">WSW</p>
             </div>
           </li>
@@ -186,11 +193,15 @@
             <h3>Sunrise & Sunset</h3>
             <div>
               <div id="sunrise">
-                <div id="sunrise-icon"></div>
+                <div id="sunrise-icon">
+                  <img src="./weather-icons/fill/all/sunrise.svg" alt="sunrise">
+                </div>
                 <p id="sunrise-value">6:35 AM</p>
               </div>
               <div id="sunset">
-                <div id="sunset-icon"></div>
+                <div id="sunset-icon">
+                  <img src="./weather-icons/fill/all/sunset.svg" alt="sunset">
+                </div>
                 <p id="sunset-value">5:42 PM</p>
               </div>
             </div>
@@ -198,8 +209,10 @@
           <li id="humidity" class="highlight-wrapper">
             <h3>Humidity</h3>
             <div id="humidity-value-image-wrapper">
-              <p id="humidity-value">12<span class="sup">%</span></p>
-              <div id="humidity-image"></div>
+              <p id="humidity-percentage"><span id="humidity-value">12</span><span class="sup">%</span></p>
+              <div id="humidity-image">
+                <img src="./weather-icons/fill/all/humidity.svg" alt="humidity">
+              </div>
             </div>
             <p id="humidity-desc">Normal</p>
           </li>

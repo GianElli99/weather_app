@@ -103,15 +103,15 @@ nav {
 .highlight-wrapper p {
   margin: 0;
 }
-
-#uv-image {
-  width: 50px;
-  height: 50px;
-
-  background-image: url(../images/placeholder1.png);
-  background-size: cover;
-  background-repeat: no-repeat;
+#uv-image-wrapper {
+  width: 252px;
+  height: 170px;
 }
+#uv-image {
+  width: 100%;
+  height: 100%;
+}
+
 #uv-value {
   font-size: 3rem;
   font-weight: 500;
@@ -128,12 +128,12 @@ nav {
   align-items: center;
 }
 #wind-icon {
-  width: 32px;
-  height: 32px;
-
-  background-image: url(../images/placeholder1.png);
-  background-size: cover;
-  background-repeat: no-repeat;
+  width: 48px;
+  height: 48px;
+}
+#wind-icon img {
+  width: 100%;
+  height: 100%;
 }
 #sunrise,
 #sunset {
@@ -144,12 +144,13 @@ nav {
 
 #sunrise-icon,
 #sunset-icon {
-  width: 64px;
-  height: 64px;
-
-  background-image: url(../images/placeholder1.png);
-  background-size: cover;
-  background-repeat: no-repeat;
+  width: 80px;
+  height: 80px;
+}
+#sunrise-icon img,
+#sunset-icon img {
+  width: 100%;
+  height: 100%;
 }
 #sunrise-value,
 #sunset-value {
@@ -161,17 +162,17 @@ nav {
   justify-content: space-between;
   align-items: center;
 }
-#humidity-value {
+#humidity-percentage {
   font-size: 3.5rem;
   font-weight: 500;
 }
 #humidity-image {
-  width: 64px;
-  height: 64px;
-
-  background-image: url(../images/placeholder1.png);
-  background-size: cover;
-  background-repeat: no-repeat;
+  width: 128px;
+  height: 128px;
+}
+#humidity-image img {
+  width: 100%;
+  height: 100%;
 }
 #air-quality-value-image-wrapper {
   display: flex;
