@@ -13,9 +13,19 @@ body {
 
   font-family: 'Hind Siliguri', sans-serif;
 }
+ul {
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
+}
 #weather-summary {
   width: 340px;
 }
 #weather-details {
   flex-grow: 1;
+}
+.sup {
+  vertical-align: super;
+  font-size: 0.5em;
 }
