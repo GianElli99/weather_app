@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="./css/weather-summary.css" />
     <link rel="stylesheet" href="./css/weather-details.css" />
 
+    <script src="./js/index.js" defer></script>
+
     <title>Weather App</title>
   </head>
   <body>
@@ -24,21 +26,29 @@
         />
       </div>
       <div id="city-main-info">
-        <div id="today-weather-icon"></div>
-        <p id="today-temperature">12<span class="sup">°C</span></p>
-        <p id="today-day">Monday, <span id="today-hour">16:00</span></p>
+        <div id="today-weather-icon">
+          <img src="./weather-icons/fill/all/clear-day.svg" alt="sunny-icon" />
+        </div>
+        <p id="today-temperature">
+          <span id="today-temperature-value">12</span
+          ><span class="sup">°C</span>
+        </p>
+        <p id="today-date">
+          <span id="today-day">Monday</span>, <span id="today-hour">16:00</span>
+        </p>
         <ul id="today-weather-list">
           <li>
-            <div></div>
+            <div>
+              <img
+                src="./weather-icons/fill/all/clear-day.svg"
+                alt="sunny-icon"
+              />
+            </div>
             <p>Mostly Cloudly</p>
-          </li>
-          <li>
-            <div></div>
-            <p>Rain - 30%</p>
           </li>
         </ul>
         <div id="city">
-          <h1>New York, NY, USA</h1>
+          <h1 id="city-name">New York, NY, USA</h1>
         </div>
       </div>
     </div>
