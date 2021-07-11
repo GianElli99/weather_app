@@ -18,12 +18,15 @@
   <body>
     <div id="weather-summary">
       <div id="city-search-bar">
-        <div id="search-icon"></div>
-        <input
-          id="search-input"
-          type="text"
-          placeholder="Seach for places..."
-        />
+        <div id="search-input-wrapper">
+          <div id="search-icon"></div>
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Seach for places..."
+          />
+        </div>
+        <ul id="suggestions" class="inactive"></ul>
       </div>
       <div id="city-main-info">
         <div id="today-weather-icon">
@@ -181,10 +184,13 @@
           </li>
           <li id="wind-status" class="highlight-wrapper">
             <h3>Wind Status</h3>
-            <p id="wind-value"><span id="wind-value-number">7.7</span id="wind-value-unit"> km/h</p>
+            <p id="wind-value">
+              <span id="wind-value-number">7.7</span
+              ><span id="wind-value-unit"> km/h</span>
+            </p>
             <div id="win-direction-wrapper">
               <div id="wind-icon">
-                <img src="./weather-icons/fill/all/compass.svg" alt="compass">
+                <img src="./weather-icons/fill/all/compass.svg" alt="compass" />
               </div>
               <p id="wind-direction">WSW</p>
             </div>
@@ -194,13 +200,16 @@
             <div>
               <div id="sunrise">
                 <div id="sunrise-icon">
-                  <img src="./weather-icons/fill/all/sunrise.svg" alt="sunrise">
+                  <img
+                    src="./weather-icons/fill/all/sunrise.svg"
+                    alt="sunrise"
+                  />
                 </div>
                 <p id="sunrise-value">6:35 AM</p>
               </div>
               <div id="sunset">
                 <div id="sunset-icon">
-                  <img src="./weather-icons/fill/all/sunset.svg" alt="sunset">
+                  <img src="./weather-icons/fill/all/sunset.svg" alt="sunset" />
                 </div>
                 <p id="sunset-value">5:42 PM</p>
               </div>
@@ -209,19 +218,24 @@
           <li id="humidity" class="highlight-wrapper">
             <h3>Humidity</h3>
             <div id="humidity-value-image-wrapper">
-              <p id="humidity-percentage"><span id="humidity-value">12</span><span class="sup">%</span></p>
+              <p id="humidity-percentage">
+                <span id="humidity-value">12</span><span class="sup">%</span>
+              </p>
               <div id="humidity-image">
-                <img src="./weather-icons/fill/all/humidity.svg" alt="humidity">
+                <img
+                  src="./weather-icons/fill/all/humidity.svg"
+                  alt="humidity"
+                />
               </div>
             </div>
-            <p id="humidity-desc">Normal</p>
+            <p id="humidity-desc">Normal &#128077;</p>
           </li>
           <li id="visibility" class="highlight-wrapper">
             <h3>Visibility</h3>
             <p id="visibility-value">
               <span id="visibility-value-number">5.2</span> km/h
             </p>
-            <p id="visibility-desc">Average</p>
+            <p id="visibility-desc">Average &#128077;</p>
           </li>
           <li id="air-quality" class="highlight-wrapper">
             <h3>Air Quality</h3>
@@ -229,7 +243,7 @@
               <p id="air-quality-value">105</p>
               <div id="air-quality-image"></div>
             </div>
-            <p id="air-quality-desc">Unhealthy</p>
+            <p id="air-quality-desc">Unhealthy &#128078;</p>
           </li>
         </ul>
       </div>

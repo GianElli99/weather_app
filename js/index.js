@@ -72,22 +72,83 @@ var todayDayElement = document.getElementById('today-day');
 var todayHourElement = document.getElementById('today-hour');
 var cityName = document.getElementById('city-name');
 var todayWeatherListElement = document.getElementById('today-weather-list');
+var query = '';
+var rightResponse = false;
 
 input.addEventListener('input', InputChange);
 
 function InputChange(event) {
   var BsAsId = '3433955';
   var HongKongId = '1819729';
-  // fetch(
-  //   `https://api.openweathermap.org/data/2.5/weather?id=${BsAsId}&appid=${APIkey}&units=metric`
-  // )
-  //   .then((res) => res.json())
-  //   .then(UpdateSummary);
+  var text = event.target.value;
+  query = text;
   fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,hourly,alerts&appid=${APIkey}&units=metric`
+    `http://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=5&appid=${APIkey}`
   )
-    .then((res) => res.json())
-    .then(UpdateView);
+    .then((res) => {
+      var q = res.url.split('q=').pop().split('&')[0];
+      q = decodeURI(q);
+      if (query === q) {
+        rightResponse = true;
+      } else {
+        rightResponse = false;
+      }
+      return res.json();
+    })
+    .then((data) => {
+      return UpdateSuggestions(data);
+    });
+}
+function UpdateSuggestions(data) {
+  console.log(data);
+  var list = document.getElementById('suggestions');
+
+  if (!rightResponse) {
+    return;
+  }
+
+  list.innerHTML = '';
+  if (data.length > 0) {
+    list.classList.remove('inactive');
+    list.classList.add('active');
+
+    data.forEach((city) => {
+      var li = document.createElement('li');
+      var text = document.createElement('span');
+      text.textContent = city.name + ', ' + city.country;
+      text.classList.add('text');
+      li.appendChild(text);
+      var lat = document.createElement('span');
+      lat.classList.add('lat');
+      lat.textContent = city.lat;
+      var lon = document.createElement('span');
+      lon.classList.add('lon');
+      lon.textContent = city.lon;
+
+      var coorWrapper = document.createElement('div');
+      coorWrapper.appendChild(lat);
+      coorWrapper.appendChild(lon);
+      li.appendChild(coorWrapper);
+
+      li.addEventListener('click', (e) => {
+        input.value = e.currentTarget.querySelector('.text').textContent;
+        list.classList.remove('active');
+        list.classList.add('inactive');
+        var selectedLat = e.currentTarget.querySelector('.lat').textContent;
+        var selectedLon = e.currentTarget.querySelector('.lon').textContent;
+
+        fetch(
+          `https://api.openweathermap.org/data/2.5/onecall?lat=${selectedLat}&lon=${selectedLon}&exclude=minutely,hourly,alerts&appid=${APIkey}&units=metric`
+        )
+          .then((res) => res.json())
+          .then(UpdateView);
+      });
+      list.appendChild(li);
+    });
+  } else {
+    list.classList.remove('active');
+    list.classList.add('inactive');
+  }
 }
 function UpdateView(data) {
   console.log(data);
