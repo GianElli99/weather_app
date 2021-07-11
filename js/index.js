@@ -75,13 +75,14 @@ var todayWeatherListElement = document.getElementById('today-weather-list');
 var query = '';
 var rightResponse = false;
 
-input.addEventListener('input', InputChange);
+input.addEventListener('input', Debounce(InputChange, 500));
 
 function InputChange(event) {
-  var BsAsId = '3433955';
-  var HongKongId = '1819729';
   var text = event.target.value;
   query = text;
+  if (text.length === 0) {
+    return;
+  }
   fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=5&appid=${APIkey}`
   )
@@ -264,4 +265,17 @@ function UpdateForecast(data) {
     liMax.textContent = Math.round(data.daily[i].temp.max).toString() + '°';
     liMin.textContent = Math.round(data.daily[i].temp.min).toString() + '°';
   }
+}
+
+function Debounce(callback, delay) {
+  let timeoutID;
+
+  return function (arg) {
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+    timeoutID = setTimeout(() => {
+      callback(arg);
+    }, delay);
+  };
 }
