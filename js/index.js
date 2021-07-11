@@ -167,13 +167,13 @@ function UpdateSummary(data) {
     '.svg';
   todayWeatherIcon.appendChild(iconImg);
 
-  var date = new Date(data.current.dt * 1000);
-  todayDayElement.textContent = days[date.getDay()];
+  var date = new Date(data.current.dt * 1000 + data.timezone_offset * 1000);
+  todayDayElement.textContent = days[date.getUTCDay()];
   var minutes =
-    date.getMinutes() > 9
-      ? date.getMinutes().toString()
-      : '0' + date.getMinutes().toString();
-  todayHourElement.textContent = date.getHours().toString() + ':' + minutes;
+    date.getUTCMinutes() > 9
+      ? date.getUTCMinutes().toString()
+      : '0' + date.getUTCMinutes().toString();
+  todayHourElement.textContent = date.getUTCHours().toString() + ':' + minutes;
 
   cityName.textContent = 'Falta resolver';
 
@@ -212,22 +212,26 @@ function UpdateTodayDetails(data) {
 
   var suriseValueElement = document.getElementById('sunrise-value');
   var sunsetValueElement = document.getElementById('sunset-value');
-  var sunriseTime = new Date(data.current.sunrise * 1000);
-  var sunsetTime = new Date(data.current.sunset * 1000);
+  var sunriseTime = new Date(
+    data.current.sunrise * 1000 + data.timezone_offset * 1000
+  );
+  var sunsetTime = new Date(
+    data.current.sunset * 1000 + data.timezone_offset * 1000
+  );
 
   var minutes =
-    sunriseTime.getMinutes() > 9
-      ? sunriseTime.getMinutes().toString()
-      : '0' + sunriseTime.getMinutes().toString();
+    sunriseTime.getUTCMinutes() > 9
+      ? sunriseTime.getUTCMinutes().toString()
+      : '0' + sunriseTime.getUTCMinutes().toString();
   suriseValueElement.textContent =
-    sunriseTime.getHours().toString() + ':' + minutes;
+    sunriseTime.getUTCHours().toString() + ':' + minutes;
 
   minutes =
-    sunsetTime.getMinutes() > 9
-      ? sunsetTime.getMinutes().toString()
-      : '0' + sunsetTime.getMinutes().toString();
+    sunsetTime.getUTCMinutes() > 9
+      ? sunsetTime.getUTCMinutes().toString()
+      : '0' + sunsetTime.getUTCMinutes().toString();
   sunsetValueElement.textContent =
-    sunsetTime.getHours().toString() + ':' + minutes;
+    sunsetTime.getUTCHours().toString() + ':' + minutes;
 
   var humidityValueElement = document.getElementById('humidity-value');
   humidityValueElement.textContent = data.current.humidity;
