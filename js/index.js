@@ -62,6 +62,34 @@ function GetWindDirection(degress) {
     return 'NNW';
   }
 }
+function GetAirPollutionDescription(index) {
+  switch (index) {
+    case 1:
+      return 'Good';
+    case 2:
+      return 'Fair';
+    case 3:
+      return 'Moderate';
+    case 4:
+      return 'Poor';
+    default:
+      return 'Very Poor';
+  }
+}
+function GetAirPollutionNumber(index) {
+  switch (index) {
+    case 1:
+      return Math.round(Math.random() * 50);
+    case 2:
+      return Math.round(Math.random() * 50 + 50);
+    case 3:
+      return Math.round(Math.random() * 100 + 100);
+    case 4:
+      return Math.round(Math.random() * 100 + 200);
+    default:
+      return Math.round(Math.random() * 100 + Math.random() * 100 + 300);
+  }
+}
 
 var input = document.getElementById('search-input');
 var todayTemperatureValueElement = document.getElementById(
@@ -137,6 +165,11 @@ function UpdateSuggestions(data) {
         list.classList.add('inactive');
         var selectedLat = e.currentTarget.querySelector('.lat').textContent;
         var selectedLon = e.currentTarget.querySelector('.lon').textContent;
+        fetch(
+          `http://api.openweathermap.org/data/2.5/air_pollution?lat=${selectedLat}&lon=${selectedLon}&appid=${APIkey}`
+        )
+          .then((res) => res.json())
+          .then(UpdateAirQuality);
 
         fetch(
           `https://api.openweathermap.org/data/2.5/onecall?lat=${selectedLat}&lon=${selectedLon}&exclude=minutely,hourly,alerts&appid=${APIkey}&units=metric`
@@ -156,6 +189,14 @@ function UpdateView(data) {
   UpdateSummary(data);
   UpdateForecast(data);
   UpdateTodayDetails(data);
+}
+function UpdateAirQuality(data) {
+  var airValueElement = document.getElementById('air-quality-value');
+  airValueElement.textContent = GetAirPollutionNumber(data.list[0].main.aqi);
+  var airDescElement = document.getElementById('air-quality-desc');
+  airDescElement.textContent = GetAirPollutionDescription(
+    data.list[0].main.aqi
+  );
 }
 function UpdateSummary(data) {
   todayTemperatureValueElement.textContent = Math.round(data.current.temp);
