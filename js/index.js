@@ -161,6 +161,8 @@ function UpdateSuggestions(data) {
 
       li.addEventListener('click', (e) => {
         input.value = e.currentTarget.querySelector('.text').textContent;
+        cityName.textContent = input.value;
+
         list.classList.remove('active');
         list.classList.add('inactive');
         var selectedLat = e.currentTarget.querySelector('.lat').textContent;
@@ -217,8 +219,6 @@ function UpdateSummary(data) {
       : '0' + date.getUTCMinutes().toString();
   todayHourElement.textContent = date.getUTCHours().toString() + ':' + minutes;
 
-  cityName.textContent = 'Falta resolver';
-
   var listItem = document.createElement('li');
   var itemImgContainer = document.createElement('div');
   var itemImg = document.createElement('img');
@@ -240,10 +240,7 @@ function UpdateSummary(data) {
 }
 function UpdateTodayDetails(data) {
   var uvImgElement = document.getElementById('uv-image');
-  var uvIndex =
-    Math.round(data.current.uvi) !== 0
-      ? Math.round(data.current.uvi).toString()
-      : '1';
+  var uvIndex = Math.round(data.current.uvi).toString();
   uvImgElement.src = './weather-icons/fill/all/uv-index-' + uvIndex + '.svg';
 
   var windValuElement = document.getElementById('wind-value-number');
