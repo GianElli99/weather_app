@@ -8,6 +8,10 @@
 
   position: relative;
 }
+#city-main-info {
+  display: flex;
+  flex-direction: column;
+}
 #search-input-wrapper {
   display: flex;
   align-items: center;
@@ -103,7 +107,6 @@ input {
 }
 
 #today-weather-list {
-  margin-top: 2rem;
   padding: 0;
 
   font-weight: 500;
@@ -146,4 +149,52 @@ input {
   font-weight: 400;
   font-size: 1.5rem;
   text-align: center;
+}
+
+@media (max-width: 1120px) {
+  #weather-summary {
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    width: 250px;
+  }
+}
+@media (max-width: 810px) {
+  #city-main-info {
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+  }
+  #city {
+    width: 100%;
+  }
+  #weather-summary {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem;
+    /* height: 250px; */
+  }
+  #today-date {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  #today-weather-icon {
+    height: 100%;
+    width: 30%;
+    min-width: 110px;
+  }
+  #date-weather-list-wrapper {
+    padding: 0 1rem;
+  }
+}
+@media (max-width: 525px) {
+  #city-main-info {
+    flex-direction: column;
+  }
+
+  #date-weather-list-wrapper {
+    display: flex;
+    align-items: center;
+  }
 }

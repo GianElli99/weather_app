@@ -147,7 +147,7 @@ nav {
   margin: 0;
 }
 #uv-image-wrapper {
-  width: 252px;
+  /* width: 252px; */
   height: 170px;
 }
 #uv-image {
@@ -240,4 +240,31 @@ nav {
 }
 #visibility-value-number {
   font-size: 3.5rem;
+}
+
+@media (max-width: 1120px) {
+  #weather-details {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}
+@media (max-width: 975px) {
+  .highlight-wrapper {
+    width: 220px;
+  }
+}
+@media (max-width: 525px) {
+  .highlight-wrapper {
+    width: 100%;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+@media (max-width: 320px) {
+  .day-wrapper {
+    width: 100%;
+  }
 }

@@ -62,6 +62,24 @@ function GetWindDirection(degress) {
     return 'NNW';
   }
 }
+function GetHumidityDescription(percentaje) {
+  if (percentaje <= 20) {
+    return 'Uncomfortably Dry';
+  }
+  if (percentaje <= 60) {
+    return 'Comfort range';
+  }
+  return 'Uncomfortably Wet';
+}
+function GetVisibilityDescription(meters) {
+  if (meters < 8000) {
+    return 'Low';
+  }
+  if (meters <= 10000) {
+    return 'Average';
+  }
+  return 'High';
+}
 function GetAirPollutionDescription(index) {
   switch (index) {
     case 1:
@@ -129,7 +147,6 @@ function InputChange(event) {
     });
 }
 function UpdateSuggestions(data) {
-  console.log(data);
   var list = document.getElementById('suggestions');
 
   if (!rightResponse) {
@@ -186,8 +203,8 @@ function UpdateSuggestions(data) {
     list.classList.add('inactive');
   }
 }
+function HandleSuggestionClick(e) {}
 function UpdateView(data) {
-  console.log(data);
   UpdateSummary(data);
   UpdateForecast(data);
   UpdateTodayDetails(data);
@@ -274,12 +291,20 @@ function UpdateTodayDetails(data) {
 
   var humidityValueElement = document.getElementById('humidity-value');
   humidityValueElement.textContent = data.current.humidity;
+  var humidityDescElement = document.getElementById('humidity-desc');
+  humidityDescElement.textContent = GetHumidityDescription(
+    data.current.humidity
+  );
 
   var visibilityValueElement = document.getElementById(
     'visibility-value-number'
   );
   visibilityValueElement.textContent =
     Math.round((data.current.visibility / 1000) * 10) / 10;
+  var visibilityDescElement = document.getElementById('visibility-desc');
+  visibilityDescElement.textContent = GetVisibilityDescription(
+    data.current.visibility
+  );
 }
 function UpdateForecast(data) {
   for (let i = 1; i <= 7; i++) {
@@ -317,3 +342,23 @@ function Debounce(callback, delay) {
     }, delay);
   };
 }
+
+var defaultEvent = {
+  target: {
+    value: 'Montes de Oca, AR',
+  },
+};
+input.value = 'Montes de Oca, AR';
+cityName.textContent = 'Montes de Oca, AR';
+
+fetch(
+  `http://api.openweathermap.org/data/2.5/air_pollution?lat=-32.5667&lon=-61.7688&&appid=${APIkey}`
+)
+  .then((res) => res.json())
+  .then(UpdateAirQuality);
+
+fetch(
+  `https://api.openweathermap.org/data/2.5/onecall?lat=-32.5667&lon=-61.7688&exclude=minutely,hourly,alerts&appid=${APIkey}&units=metric`
+)
+  .then((res) => res.json())
+  .then(UpdateView);

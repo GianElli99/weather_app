@@ -30,3 +30,8 @@ ul {
   vertical-align: super;
   font-size: 0.5em;
 }
+@media (max-width: 810px) {
+  body {
+    flex-direction: column;
+  }
+}
