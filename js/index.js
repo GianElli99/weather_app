@@ -1,8 +1,4 @@
 var APIkey = 'e35b38d0fdfdbe50df60d75dfb60145e';
-var coord = {
-  lon: -60,
-  lat: -36,
-};
 var days = [
   'Sunday',
   'Monday',
@@ -110,40 +106,37 @@ function GetAirPollutionNumber(index) {
 }
 
 var input = document.getElementById('search-input');
-var todayTemperatureValueElement = document.getElementById(
-  'today-temperature-value'
-);
-var todayWeatherIcon = document.getElementById('today-weather-icon');
-var todayDayElement = document.getElementById('today-day');
-var todayHourElement = document.getElementById('today-hour');
-var cityName = document.getElementById('city-name');
-var todayWeatherListElement = document.getElementById('today-weather-list');
-var query = '';
+input.addEventListener('input', Debounce(HandleInputChange, 500));
+var lastText = '';
 var rightResponse = false;
 
-input.addEventListener('input', Debounce(InputChange, 500));
+var todayHourElement = document.getElementById('today-hour');
+var cityName = document.getElementById('city-name');
 
-function InputChange(event) {
+function HandleInputChange(event) {
   var text = event.target.value;
-  query = text;
+  lastText = text;
   if (text.length === 0) {
     return;
   }
   fetch(
     `https://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=5&appid=${APIkey}`
   )
-    .then((res) => {
+    .then(function (res) {
       var q = res.url.split('q=').pop().split('&')[0];
       q = decodeURI(q);
-      if (query === q) {
+      if (lastText === q) {
         rightResponse = true;
       } else {
         rightResponse = false;
       }
       return res.json();
     })
-    .then((data) => {
+    .then(function (data) {
       return UpdateSuggestions(data);
+    })
+    .catch(function (error) {
+      console.log('An error occurred');
     });
 }
 function UpdateSuggestions(data) {
@@ -158,50 +151,62 @@ function UpdateSuggestions(data) {
     list.classList.remove('inactive');
     list.classList.add('active');
 
-    data.forEach((city) => {
-      var li = document.createElement('li');
-      var text = document.createElement('span');
-      text.textContent = city.name + ', ' + city.country;
-      text.classList.add('text');
-      li.appendChild(text);
-      var lat = document.createElement('span');
-      lat.classList.add('lat');
-      lat.textContent = city.lat;
-      var lon = document.createElement('span');
-      lon.classList.add('lon');
-      lon.textContent = city.lon;
-
-      var coorWrapper = document.createElement('div');
-      coorWrapper.appendChild(lat);
-      coorWrapper.appendChild(lon);
-      li.appendChild(coorWrapper);
-
-      li.addEventListener('click', (e) => {
-        input.value = e.currentTarget.querySelector('.text').textContent;
-        cityName.textContent = input.value;
-
-        list.classList.remove('active');
-        list.classList.add('inactive');
-        var selectedLat = e.currentTarget.querySelector('.lat').textContent;
-        var selectedLon = e.currentTarget.querySelector('.lon').textContent;
-        fetch(
-          `https://api.openweathermap.org/data/2.5/air_pollution?lat=${selectedLat}&lon=${selectedLon}&appid=${APIkey}`
-        )
-          .then((res) => res.json())
-          .then(UpdateAirQuality);
-
-        fetch(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${selectedLat}&lon=${selectedLon}&exclude=minutely,hourly,alerts&appid=${APIkey}&units=metric`
-        )
-          .then((res) => res.json())
-          .then(UpdateView);
-      });
+    data.forEach(function (city) {
+      var li = CreateLiFromCity(city);
       list.appendChild(li);
     });
   } else {
     list.classList.remove('active');
     list.classList.add('inactive');
   }
+}
+function CreateLiFromCity(city) {
+  var li = document.createElement('li');
+  var text = document.createElement('span');
+  text.textContent = city.name + ', ' + city.country;
+  text.classList.add('text');
+  li.appendChild(text);
+
+  var lat = document.createElement('span');
+  lat.classList.add('lat');
+  lat.textContent = city.lat;
+  var lon = document.createElement('span');
+  lon.classList.add('lon');
+  lon.textContent = city.lon;
+
+  var coorWrapper = document.createElement('div');
+  coorWrapper.appendChild(lat);
+  coorWrapper.appendChild(lon);
+  li.appendChild(coorWrapper);
+
+  li.addEventListener('click', function (e) {
+    input.value = e.currentTarget.querySelector('.text').textContent;
+    cityName.textContent = input.value;
+
+    var list = document.getElementById('suggestions');
+    list.classList.remove('active');
+    list.classList.add('inactive');
+    var selectedLat = e.currentTarget.querySelector('.lat').textContent;
+    var selectedLon = e.currentTarget.querySelector('.lon').textContent;
+    fetch(
+      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${selectedLat}&lon=${selectedLon}&appid=${APIkey}`
+    )
+      .then((res) => res.json())
+      .then(UpdateAirQuality)
+      .catch(function (error) {
+        console.log('An error occurred');
+      });
+
+    fetch(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${selectedLat}&lon=${selectedLon}&exclude=minutely,hourly,alerts&appid=${APIkey}&units=metric`
+    )
+      .then((res) => res.json())
+      .then(UpdateView)
+      .catch(function (error) {
+        console.log('An error occurred');
+      });
+  });
+  return li;
 }
 function HandleSuggestionClick(e) {}
 function UpdateView(data) {
@@ -218,8 +223,12 @@ function UpdateAirQuality(data) {
   );
 }
 function UpdateSummary(data) {
+  var todayTemperatureValueElement = document.getElementById(
+    'today-temperature-value'
+  );
   todayTemperatureValueElement.textContent = Math.round(data.current.temp);
 
+  var todayWeatherIcon = document.getElementById('today-weather-icon');
   todayWeatherIcon.innerHTML = '';
   var iconImg = document.createElement('img');
   iconImg.src =
@@ -229,11 +238,9 @@ function UpdateSummary(data) {
   todayWeatherIcon.appendChild(iconImg);
 
   var date = new Date(data.current.dt * 1000 + data.timezone_offset * 1000);
+  var todayDayElement = document.getElementById('today-day');
   todayDayElement.textContent = days[date.getUTCDay()];
-  var minutes =
-    date.getUTCMinutes() > 9
-      ? date.getUTCMinutes().toString()
-      : '0' + date.getUTCMinutes().toString();
+  var minutes = GetMinutes(date);
   todayHourElement.textContent = date.getUTCHours().toString() + ':' + minutes;
 
   var listItem = document.createElement('li');
@@ -249,11 +256,17 @@ function UpdateSummary(data) {
     (letter) => letter.toUpperCase()
   );
 
+  var todayWeatherListElement = document.getElementById('today-weather-list');
   todayWeatherListElement.innerHTML = '';
   itemImgContainer.appendChild(itemImg);
   listItem.appendChild(itemImgContainer);
   listItem.appendChild(itemDesc);
   todayWeatherListElement.appendChild(listItem);
+}
+function GetMinutes(date) {
+  return date.getUTCMinutes() > 9
+    ? date.getUTCMinutes().toString()
+    : '0' + date.getUTCMinutes().toString();
 }
 function UpdateTodayDetails(data) {
   var uvImgElement = document.getElementById('uv-image');
@@ -275,19 +288,11 @@ function UpdateTodayDetails(data) {
     data.current.sunset * 1000 + data.timezone_offset * 1000
   );
 
-  var minutes =
-    sunriseTime.getUTCMinutes() > 9
-      ? sunriseTime.getUTCMinutes().toString()
-      : '0' + sunriseTime.getUTCMinutes().toString();
   suriseValueElement.textContent =
-    sunriseTime.getUTCHours().toString() + ':' + minutes;
+    sunriseTime.getUTCHours().toString() + ':' + GetMinutes(sunriseTime);
 
-  minutes =
-    sunsetTime.getUTCMinutes() > 9
-      ? sunsetTime.getUTCMinutes().toString()
-      : '0' + sunsetTime.getUTCMinutes().toString();
   sunsetValueElement.textContent =
-    sunsetTime.getUTCHours().toString() + ':' + minutes;
+    sunsetTime.getUTCHours().toString() + ':' + GetMinutes(sunsetTime);
 
   var humidityValueElement = document.getElementById('humidity-value');
   humidityValueElement.textContent = data.current.humidity;
@@ -355,10 +360,16 @@ fetch(
   `https://api.openweathermap.org/data/2.5/air_pollution?lat=-32.5667&lon=-61.7688&&appid=${APIkey}`
 )
   .then((res) => res.json())
-  .then(UpdateAirQuality);
+  .then(UpdateAirQuality)
+  .catch(function (error) {
+    console.log('An error occurred');
+  });
 
 fetch(
   `https://api.openweathermap.org/data/2.5/onecall?lat=-32.5667&lon=-61.7688&exclude=minutely,hourly,alerts&appid=${APIkey}&units=metric`
 )
   .then((res) => res.json())
-  .then(UpdateView);
+  .then(UpdateView)
+  .catch(function (error) {
+    console.log('An error occurred');
+  });
