@@ -72,7 +72,7 @@ function GetHumidityDescription(percentaje) {
   return 'Uncomfortably Wet';
 }
 function GetVisibilityDescription(meters) {
-  if (meters < 8000) {
+  if (meters <= 8000) {
     return 'Low';
   }
   if (meters <= 10000) {
@@ -130,7 +130,7 @@ function InputChange(event) {
     return;
   }
   fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=5&appid=${APIkey}`
+    `https://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=5&appid=${APIkey}`
   )
     .then((res) => {
       var q = res.url.split('q=').pop().split('&')[0];
@@ -185,7 +185,7 @@ function UpdateSuggestions(data) {
         var selectedLat = e.currentTarget.querySelector('.lat').textContent;
         var selectedLon = e.currentTarget.querySelector('.lon').textContent;
         fetch(
-          `http://api.openweathermap.org/data/2.5/air_pollution?lat=${selectedLat}&lon=${selectedLon}&appid=${APIkey}`
+          `https://api.openweathermap.org/data/2.5/air_pollution?lat=${selectedLat}&lon=${selectedLon}&appid=${APIkey}`
         )
           .then((res) => res.json())
           .then(UpdateAirQuality);
@@ -352,7 +352,7 @@ input.value = 'Montes de Oca, AR';
 cityName.textContent = 'Montes de Oca, AR';
 
 fetch(
-  `http://api.openweathermap.org/data/2.5/air_pollution?lat=-32.5667&lon=-61.7688&&appid=${APIkey}`
+  `https://api.openweathermap.org/data/2.5/air_pollution?lat=-32.5667&lon=-61.7688&&appid=${APIkey}`
 )
   .then((res) => res.json())
   .then(UpdateAirQuality);
